@@ -34,20 +34,20 @@ class Counter extends React.Component {
     onDecrement: PropTypes.func,
     name: PropTypes.String,
     onNameChange: PropTypes.func,
-      onNameChange2: PropTypes.func
+    onBlurInput: PropTypes.func
   };
 
 
   onNameChange (event) {
-      const name = event.target.value;
+      const name = this.state.name;
       this.setState({
-          name: name
+          name: event.target.value
       });
   };
 
 
   render() {
-    const { counter, onDecrement, onIncrement, name, onNameChange2 } = this.props;
+    const { counter, onDecrement, onIncrement, name, onBlurInput } = this.props;
 
     return (
       <div>
@@ -57,7 +57,7 @@ class Counter extends React.Component {
             placeholder="Imię"
             value={this.state.name}
             onChange={this.onNameChange}
-            onBlur={onNameChange2}
+            onBlur={onBlurInput}
         />
 
           <div>{counter}</div>
@@ -69,16 +69,14 @@ class Counter extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return {
-      name: state.name
-  }
-
+  return state;
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
     onIncrement: () => dispatch({ type: 'INCREMENT' }),
     onDecrement: () => dispatch({ type: 'DECREMENT' }),
-    onNameChange2: () => dispatch({ type: 'CREATE_NAME' })
+    onBlurInput: () => dispatch({ type: 'CREATE_NAME' })
   }
 };
 

@@ -10,7 +10,7 @@ const reducer = (state, action) => {
       case 'DECREMENT':
         return { ...state, counter: state.counter - 1 };
       case 'CREATE_NAME':
-          return {...state, name};
+          return {...state, name };
     default:
       return state;
     }
@@ -28,26 +28,27 @@ class Counter extends React.Component {
         this.onNameChange = this.onNameChange.bind(this);
     }
 
-  static propTypes = {
-    counter: PropTypes.Number,
-    onIncrement: PropTypes.func,
-    onDecrement: PropTypes.func,
-    name: PropTypes.String,
-    onNameChange: PropTypes.func,
-    onBlurInput: PropTypes.func
-  };
+  // static propTypes = {
+  //   counter: PropTypes.Number,
+  //   onIncrement: PropTypes.func,
+  //   onDecrement: PropTypes.func,
+  //   name: PropTypes.String,
+  //   onNameChange: PropTypes.func,
+  //   onBlurInput: PropTypes.func
+  // };
 
 
   onNameChange (event) {
-      const name = this.state.name;
+      const name = 'mar';
       this.setState({
           name: event.target.value
       });
+
   };
 
 
   render() {
-    const { counter, onDecrement, onIncrement, name, onBlurInput } = this.props;
+    const { counter, onDecrement, onIncrement, name, onChange } = this.props;
 
     return (
       <div>
@@ -57,10 +58,10 @@ class Counter extends React.Component {
             placeholder="Imię"
             value={this.state.name}
             onChange={this.onNameChange}
-            onBlur={onBlurInput}
         />
+        <button onClick={onChange}>OK</button>
 
-          <div>{counter}</div>
+        <div>{counter}</div>
         <button onClick={onDecrement}>-</button>
         <button onClick={onIncrement}>+</button>
       </div>
@@ -76,7 +77,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onIncrement: () => dispatch({ type: 'INCREMENT' }),
     onDecrement: () => dispatch({ type: 'DECREMENT' }),
-    onBlurInput: () => dispatch({ type: 'CREATE_NAME' })
+    onChange: () => dispatch({ type: 'CREATE_NAME' })
   }
 };
 

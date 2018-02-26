@@ -33,12 +33,11 @@ class Counter extends React.Component {
     }
 
   // static propTypes = {
-  //   counter: PropTypes.Number,
+  //   counter: PropTypes.number,
   //   onIncrement: PropTypes.func,
   //   onDecrement: PropTypes.func,
-  //   name: PropTypes.String,
+  //   name: PropTypes.string,
   //   onNameChange: PropTypes.func,
-  //   onBlurInput: PropTypes.func
   // };
 
 

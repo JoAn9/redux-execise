@@ -16,6 +16,10 @@ const reducer = (state, action) => {
     }
 };
 
+function createName(name) {
+    return { type: 'CREATE_NAME', name};
+}
+
 const store = createStore(reducer, { counter: 0, name: 'You' });
 
 class Counter extends React.Component {
@@ -39,16 +43,19 @@ class Counter extends React.Component {
 
 
   onNameChange (event) {
-      const name = 'mar';
+      const name = this.state.name;
       this.setState({
           name: event.target.value
       });
-
   };
+
+    onChange() {
+        this.props.createName(this.state.name)
+    }
 
 
   render() {
-    const { counter, onDecrement, onIncrement, name, onChange } = this.props;
+    const { counter, onDecrement, onIncrement, name, onChange, createName } = this.props;
 
     return (
       <div>

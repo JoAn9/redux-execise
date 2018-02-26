@@ -79,11 +79,11 @@ const mapStateToProps = (state) => {
   return state;
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     onIncrement: () => dispatch({ type: 'INCREMENT' }),
     onDecrement: () => dispatch({ type: 'DECREMENT' }),
-    onChange: () => dispatch({ type: 'CREATE_NAME' })
+    onChange: () => dispatch(createName())
   }
 };
 

@@ -3,6 +3,10 @@ import { render } from 'react-dom';
 import { createStore } from 'redux';
 import { connect, Provider } from 'react-redux';
 
+function createName(name) {
+    return { type: 'CREATE_NAME', name};
+}
+
 const reducer = (state, action) => {
   switch (action.type) {
       case 'INCREMENT':
@@ -16,21 +20,19 @@ const reducer = (state, action) => {
     }
 };
 
-function createName(name) {
-    return { type: 'CREATE_NAME', name};
-}
-
 const store = createStore(reducer, { counter: 0, name: 'You' });
 
 class Counter extends React.Component {
-    constructor(props) {
-        super(props);
+    constructor(props, context) {
+        super(props, context);
         this.state = {
             name: ''
         };
 
         this.onNameChange = this.onNameChange.bind(this);
     }
+
+
 
   // static propTypes = {
   //   counter: PropTypes.number,
@@ -48,24 +50,23 @@ class Counter extends React.Component {
       });
   };
 
-    onChange() {
-        this.props.createName(this.state.name)
+    onClickOK() {
+        this.props.createName(this.state.name);
     }
 
 
   render() {
-    const { counter, onDecrement, onIncrement, name, onChange, createName } = this.props;
+    const { counter, onDecrement, onIncrement, name, onChange, createName, onClickOK } = this.props;
 
     return (
       <div>
-        <div>{name}</div>
+        <div>{this.props.name}</div>
         <input
             type="text"
             placeholder="Imię"
             value={this.state.name}
-            onChange={this.onNameChange}
-        />
-        <button onClick={onChange}>OK</button>
+            onChange={this.onNameChange} />
+        <button onClick={onClickOK}>OK</button>
 
         <div>{counter}</div>
         <button onClick={onDecrement}>-</button>
@@ -75,7 +76,7 @@ class Counter extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return state;
 };
 
@@ -83,7 +84,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onIncrement: () => dispatch({ type: 'INCREMENT' }),
     onDecrement: () => dispatch({ type: 'DECREMENT' }),
-    onChange: () => dispatch(createName())
+    onClickOK: () => dispatch(createName())
   }
 };
 

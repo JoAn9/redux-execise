@@ -4,7 +4,10 @@ import { createStore } from 'redux';
 import { connect, Provider } from 'react-redux';
 
 function createName(name) {
-    return { type: 'CREATE_NAME', name};
+    return {
+        type: 'CREATE_NAME',
+        name
+    };
 }
 
 const reducer = (state, action) => {
@@ -14,7 +17,7 @@ const reducer = (state, action) => {
       case 'DECREMENT':
         return { ...state, counter: state.counter - 1 };
       case 'CREATE_NAME':
-          return {...state, name };
+          return {...state, name: action.name};
     default:
       return state;
     }
@@ -50,9 +53,9 @@ class Counter extends React.Component {
       });
   };
 
-    onClickOK() {
-        this.props.createName(this.state.name);
-    }
+  onClickOK() {
+      this.props.createName(this.state.name);
+  }
 
 
   render() {
@@ -60,7 +63,7 @@ class Counter extends React.Component {
 
     return (
       <div>
-        <div>{this.props.name}</div>
+        <div>{name}</div>
         <input
             type="text"
             placeholder="Imię"

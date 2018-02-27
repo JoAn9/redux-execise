@@ -17,7 +17,7 @@ const reducer = (state, action) => {
       case 'DECREMENT':
         return { ...state, counter: state.counter - 1 };
       case 'CREATE_NAME':
-          return {...state, name: action.name};
+          return {...state, name};
     default:
       return state;
     }
@@ -60,7 +60,7 @@ class Counter extends React.Component {
 
   render() {
     const { counter, onDecrement, onIncrement, name, onChange, createName, onClickOK } = this.props;
-
+    console.log(name);
     return (
       <div>
         <div>{name}</div>
@@ -87,7 +87,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onIncrement: () => dispatch({ type: 'INCREMENT' }),
     onDecrement: () => dispatch({ type: 'DECREMENT' }),
-    onClickOK: () => dispatch(createName())
+    onClickOK: name => dispatch(createName(name))
   }
 };
 

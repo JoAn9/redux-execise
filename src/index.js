@@ -3,78 +3,81 @@ import { render } from 'react-dom';
 import { createStore } from 'redux';
 import { connect, Provider } from 'react-redux';
 
-function createName(name) {
+function createUser(name, band) {
     return {
-        type: 'CREATE_NAME',
-        name
+        type: 'CREATE_USER',
+        name,
+        band
     };
 }
 
 const reducer = (state, action) => {
   switch (action.type) {
-      case 'INCREMENT':
-        return { ...state, counter: state.counter + 1 };
-      case 'DECREMENT':
-        return { ...state, counter: state.counter - 1 };
-      case 'CREATE_NAME':
-          return {...state, name: action.name};
+      case 'CREATE_USER':
+          return {...state, name: action.name, band: action.band};
+
     default:
       return state;
     }
 };
 
-const store = createStore(reducer, { counter: 0, name: 'You' });
+const store = createStore(reducer, { name: 'You', band: '' });
 
-class Counter extends React.Component {
+class User extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            name: ''
+            name: '',
+            band: ''
         };
 
         this.onNameChange = this.onNameChange.bind(this);
+        this.onBandChange = this.onBandChange.bind(this);
     }
 
 
+    onNameChange (event) {
+        const name = this.state.name;
+        this.setState({
+            name: event.target.value
+        });
+    };
 
-  // static propTypes = {
-  //   counter: PropTypes.number,
-  //   onIncrement: PropTypes.func,
-  //   onDecrement: PropTypes.func,
-  //   name: PropTypes.string,
-  //   onNameChange: PropTypes.func,
-  // };
+    onBandChange (event) {
+        const band = this.state.band;
+        this.setState({
+            band: event.target.value
+        });
+    };
 
-
-  onNameChange (event) {
-      const name = this.state.name;
-      this.setState({
-          name: event.target.value
-      });
-  };
-
-  onClickOK = () => {
-      this.props.onClickOK(this.state.name);
-  };
+    onOKClick = (e) => {
+      e.preventDefault();
+      this.props.onOKClick(this.state.name, this.state.band);
+    };
 
 
   render() {
-    const { counter, onDecrement, onIncrement, name, createName, onClickOK } = this.props;
-    console.log(name);
+    const { name, band } = this.props;
+
     return (
-      <div>
-        <div>{this.props.name}</div>
+      <form onSubmit={e => this.onOKClick(e)}>
+        <div>Imię: {name}</div>
+        <div>Zespół: {band}</div>
         <input
             type="text"
             placeholder="Imię"
             value={this.state.name}
             onChange={this.onNameChange} />
-        <button onClick={e => this.onClickOK()}>OK</button>
 
-        <div>{counter}</div>
-        <button onClick={onDecrement}>-</button>
-        <button onClick={onIncrement}>+</button>
-      </div>
+        <input
+            type="text"
+            placeholder="Zespół"
+            value={this.state.band}
+            onChange={this.onBandChange} />
+
+        <input type="submit" value="Submit" />
+
+      </form>
     );
   }
 }
@@ -85,17 +88,15 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onIncrement: () => dispatch({ type: 'INCREMENT' }),
-    onDecrement: () => dispatch({ type: 'DECREMENT' }),
-    onClickOK: name => dispatch(createName(name))
+    onOKClick: (name, band) => dispatch(createUser(name, band)),
   }
 };
 
-Counter = connect(mapStateToProps, mapDispatchToProps)(Counter);
+User = connect(mapStateToProps, mapDispatchToProps)(User);
 
 render(
   <Provider store={store}>
-    <Counter />
+    <User />
   </Provider>
   , document.getElementById('root')
 );

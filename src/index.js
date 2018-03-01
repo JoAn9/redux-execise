@@ -53,23 +53,23 @@ class Counter extends React.Component {
       });
   };
 
-  onClickOK() {
-      this.props.createName(this.state.name);
+  onClickOK = () => {
+      this.props.onClickOK(this.state.name);
   }
 
 
   render() {
-    const { counter, onDecrement, onIncrement, name, onChange, createName, onClickOK } = this.props;
+    const { counter, onDecrement, onIncrement, name, createName, onClickOK } = this.props;
     console.log(name);
     return (
       <div>
-        <div>{name}</div>
+        <div>{this.props.name}</div>
         <input
             type="text"
             placeholder="Imię"
             value={this.state.name}
             onChange={this.onNameChange} />
-        <button onClick={onClickOK}>OK</button>
+        <button onClick={e => this.onClickOK()}>OK</button>
 
         <div>{counter}</div>
         <button onClick={onDecrement}>-</button>

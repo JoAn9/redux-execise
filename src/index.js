@@ -17,7 +17,7 @@ const reducer = (state, action) => {
       case 'DECREMENT':
         return { ...state, counter: state.counter - 1 };
       case 'CREATE_NAME':
-          return {...state, name};
+          return {...state, name: action.name};
     default:
       return state;
     }
@@ -55,7 +55,7 @@ class Counter extends React.Component {
 
   onClickOK = () => {
       this.props.onClickOK(this.state.name);
-  }
+  };
 
 
   render() {

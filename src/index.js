@@ -36,19 +36,19 @@ class User extends React.Component {
     }
 
 
-    onNameChange (event) {
+    onNameChange(event) {
         const name = this.state.name;
         this.setState({
             name: event.target.value
         });
-    };
+    }
 
     onBandChange (event) {
         const band = this.state.band;
         this.setState({
             band: event.target.value
         });
-    };
+    }
 
     onOKClick = (e) => {
       e.preventDefault();
@@ -88,7 +88,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onOKClick: (name, band) => dispatch(createUser(name, band)),
+    onOKClick: (name, band) => dispatch(createUser(name, band))
   }
 };
 
